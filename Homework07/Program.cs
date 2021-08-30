@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Homework07
 {
@@ -6,11 +7,44 @@ namespace Homework07
     {
         static void Main(string[] args)
         {
+            var person = new Person();
+            person.firstName = "Иван";
+            person.lastName = "Иванов";
+            person.age = 30;
+            person.sex = Sex.Male;
+
+            var persons = new List<Person>();
+            persons.Add(person);
+
+            DisplayPersons(persons);
+
         }
+
+        static void DisplayPersons(List<Person> persons)
+        {
+            foreach (var person in persons)
+            {
+                Console.WriteLine($"{person.firstName} {person.lastName} {person.age} {person.sex}");
+            }
+
+        }
+    }
+    class Person
+    {
+        public string firstName;
+        public string lastName;
+        public int age;
+        public Sex sex;
+    }
+    enum Sex
+    {
+        Male,
+        Female
     }
 }
 //Что нужно сделать
-//Разработайте ежедневник, который может хранить множество записей. Каждая запись состоит из нескольких полей, количество которых должно быть не менее пяти. Поля могут быть произвольными, однако одним из них должна быть дата добавления записи.
+//Разработайте ежедневник, который может хранить множество записей. Каждая запись состоит из нескольких полей, количество которых должно быть не менее пяти.
+//Поля могут быть произвольными, однако одним из них должна быть дата добавления записи.
 
 
 
