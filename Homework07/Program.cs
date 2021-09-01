@@ -14,8 +14,17 @@ namespace Homework07
             person.sex = Sex.Male;
             person.createdDate = DateTime.Now;
 
+            var person2 = new Person();
+            person2.firstName = "Мария";
+            person2.lastName = "Петрова";
+            person2.age = 25;
+            person2.sex = Sex.Female;
+            person2.createdDate = DateTime.Now;
+
+
             var persons = new List<Person>();
             persons.Add(person);
+            persons.Add(person2);
 
             DisplayPersons(persons);
             
@@ -23,9 +32,10 @@ namespace Homework07
 
         static void DisplayPersons(List<Person> persons)
         {
+            Console.WriteLine($"{"Имя",10} {"Фамилия",20} {"Возраст",7} {"Пол",8} {"Время создания",20}");
             foreach (var person in persons)
             {
-                Console.WriteLine($"{person.firstName} {person.lastName} {person.age} {person.sex} {person.createdDate}");
+                Console.WriteLine($"{person.firstName,10} {person.lastName,20} {person.age,7} {person.sex,8} {person.createdDate,20}");
             }
 
         }
