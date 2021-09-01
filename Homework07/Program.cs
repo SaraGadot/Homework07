@@ -21,15 +21,43 @@ namespace Homework07
             person2.sex = Sex.Female;
             person2.createdDate = DateTime.Now;
 
+            var person3 = InputPerson();
+
 
             var persons = new List<Person>();
             persons.Add(person);
             persons.Add(person2);
+            persons.Add(person3);
 
             DisplayPersons(persons);
             
         }
-
+        static Person InputPerson()
+        {
+            Console.WriteLine("Введите имя:");
+            var firstName = Console.ReadLine();
+            Console.WriteLine("Введите фамилию:");
+            var lastName = Console.ReadLine();
+            Console.WriteLine("Введите возраст:");
+            var age = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Введите пол (м/ж)");
+            Sex sex;
+            if (Console.ReadLine() == "м")
+            {
+                sex = Sex.Male;
+            }
+            else
+            {
+                sex = Sex.Female;
+            }
+            var person = new Person();
+            person.firstName = firstName;
+            person.lastName = lastName;
+            person.age = age;
+            person.sex = sex;
+            person.createdDate = DateTime.Now;
+            return person;
+        }
         static void DisplayPersons(List<Person> persons)
         {
             Console.WriteLine($"{"Имя",10} {"Фамилия",20} {"Возраст",7} {"Пол",8} {"Время создания",20}");
@@ -55,7 +83,8 @@ namespace Homework07
     }
 }
 //Что нужно сделать
-//Разработайте ежедневник, который может хранить множество записей. Каждая запись состоит из нескольких полей, количество которых должно быть не менее пяти.
+//Разработайте ежедневник, который может хранить множество записей. Каждая запись состоит из нескольких полей, количество которых
+//должно быть не менее пяти.
 //Поля могут быть произвольными, однако одним из них должна быть дата добавления записи.
 
 
