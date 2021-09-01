@@ -12,19 +12,20 @@ namespace Homework07
             person.lastName = "Иванов";
             person.age = 30;
             person.sex = Sex.Male;
+            person.createdDate = DateTime.Now;
 
             var persons = new List<Person>();
             persons.Add(person);
 
             DisplayPersons(persons);
-
+            
         }
 
         static void DisplayPersons(List<Person> persons)
         {
             foreach (var person in persons)
             {
-                Console.WriteLine($"{person.firstName} {person.lastName} {person.age} {person.sex}");
+                Console.WriteLine($"{person.firstName} {person.lastName} {person.age} {person.sex} {person.createdDate}");
             }
 
         }
@@ -35,6 +36,7 @@ namespace Homework07
         public string lastName;
         public int age;
         public Sex sex;
+        public DateTime createdDate;
     }
     enum Sex
     {
