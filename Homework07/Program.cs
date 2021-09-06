@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Homework07
 {
@@ -7,29 +9,31 @@ namespace Homework07
     {
         static void Main(string[] args)
         {
-            var person = new Person();
-            person.firstName = "Иван";
-            person.lastName = "Иванов";
-            person.age = 30;
-            person.sex = Sex.Male;
-            person.createdDate = DateTime.Now;
+            //var person = new Person();
+            //person.firstName = "Иван";
+            //person.lastName = "Иванов";
+            //person.age = 30;
+            //person.sex = Sex.Male;
+            //person.createdDate = DateTime.Now;
 
-            var person2 = new Person();
-            person2.firstName = "Мария";
-            person2.lastName = "Петрова";
-            person2.age = 25;
-            person2.sex = Sex.Female;
-            person2.createdDate = DateTime.Now;
+            //var person2 = new Person();
+            //person2.firstName = "Мария";
+            //person2.lastName = "Петрова";
+            //person2.age = 25;
+            //person2.sex = Sex.Female;
+            //person2.createdDate = DateTime.Now;
 
+            var persons = LoadPersons();
             var person3 = InputPerson();
 
 
-            var persons = new List<Person>();
-            persons.Add(person);
-            persons.Add(person2);
+            //var persons = new List<Person>();
+            //persons.Add(person);
+            //persons.Add(person2);
             persons.Add(person3);
 
             DisplayPersons(persons);
+            SavePersons(persons);
             
         }
         static Person InputPerson()
@@ -67,6 +71,16 @@ namespace Homework07
             }
 
         }
+        static void SavePersons(List<Person> persons)
+        {
+            var json = JsonConvert.SerializeObject(persons, Formatting.Indented);
+            File.WriteAllText("persons.json", json);
+        }
+        static List<Person> LoadPersons()
+        {
+            var json = File.ReadAllText("persons.json");
+            return JsonConvert.DeserializeObject<List<Person>>(json);
+        }
     }
     class Person
     {
@@ -81,6 +95,7 @@ namespace Homework07
         Male,
         Female
     }
+
 }
 //Что нужно сделать
 //Разработайте ежедневник, который может хранить множество записей. Каждая запись состоит из нескольких полей, количество которых
