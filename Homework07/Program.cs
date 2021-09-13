@@ -45,15 +45,7 @@ namespace Homework07
             Console.WriteLine("Введите возраст:");
             var age = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Введите пол (м/ж)");
-            Sex sex;
-            if (Console.ReadLine() == "м")
-            {
-                sex = Sex.Male;
-            }
-            else
-            {
-                sex = Sex.Female;
-            }
+            var sex = Console.ReadLine() == "м" ? Sex.Male : Sex.Female;
             var person = new Person();
             person.firstName = firstName;
             person.lastName = lastName;
@@ -78,6 +70,9 @@ namespace Homework07
         }
         static List<Person> LoadPersons()
         {
+            if (!File.Exists("persons.json"))
+                return new List<Person>();
+
             var json = File.ReadAllText("persons.json");
             return JsonConvert.DeserializeObject<List<Person>>(json);
         }
