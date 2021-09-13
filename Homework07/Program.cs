@@ -27,9 +27,6 @@ namespace Homework07
             var person3 = InputPerson();
 
 
-            //var persons = new List<Person>();
-            //persons.Add(person);
-            //persons.Add(person2);
             persons.Add(person3);
 
             DisplayPersons(persons);
@@ -46,13 +43,7 @@ namespace Homework07
             var age = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Введите пол (м/ж)");
             var sex = Console.ReadLine() == "м" ? Sex.Male : Sex.Female;
-            var person = new Person();
-            person.firstName = firstName;
-            person.lastName = lastName;
-            person.age = age;
-            person.sex = sex;
-            person.createdDate = DateTime.Now;
-            return person;
+            return new Person(firstName, lastName, age, sex);
         }
         static void DisplayPersons(List<Person> persons)
         {
@@ -83,7 +74,18 @@ namespace Homework07
         public string lastName;
         public int age;
         public Sex sex;
-        public DateTime createdDate;
+        public DateTime createdDate = DateTime.Now;
+        public Person(string firstName, string lastName, int age, Sex sex)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.age = age;
+            this.sex = sex;
+        }
+        public Person()
+        {
+
+        }
     }
     enum Sex
     {
