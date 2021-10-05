@@ -27,22 +27,35 @@ namespace Homework07
 
             DisplayPersons(persons);
 
-            Menu(persons);
+            for ( ; ; )
+            {
+                if (Menu(persons) == false)
+                {
+                    break;
+                }
 
-            DisplayPersons(persons);
+                DisplayPersons(persons);
+            }
+                
 
             SavePersons(persons);
             
         }
-        static void Menu(List<Person> persons)
+        static bool Menu(List<Person> persons)
         {
             Console.WriteLine("Выберите действие: ");
             Console.WriteLine("1. Добавить запись");
+            Console.WriteLine("0. Выйти");
             var action = Console.ReadLine();
             if (action == "1")
             {
                 AddPerson(persons);
             }
+            else if (action == "0")
+            {
+                return false;
+            }
+            return true;
            
         }
         static void AddPerson (List<Person> persons)
