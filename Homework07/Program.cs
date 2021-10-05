@@ -24,14 +24,32 @@ namespace Homework07
             //person2.createdDate = DateTime.Now;
 
             var persons = LoadPersons();
-            var person3 = InputPerson();
-
-
-            persons.Add(person3);
 
             DisplayPersons(persons);
+
+            Menu(persons);
+
+            DisplayPersons(persons);
+
             SavePersons(persons);
             
+        }
+        static void Menu(List<Person> persons)
+        {
+            Console.WriteLine("Выберите действие: ");
+            Console.WriteLine("1. Добавить запись");
+            var action = Console.ReadLine();
+            if (action == "1")
+            {
+                AddPerson(persons);
+            }
+           
+        }
+        static void AddPerson (List<Person> persons)
+        {
+            var person3 = InputPerson();
+            persons.Add(person3);
+
         }
         static Person InputPerson()
         {
@@ -114,7 +132,8 @@ namespace Homework07
 //Информация генерируется программой.
 
 
-//Удалять запись можно как по номеру, так и по любому полю. Если несколько записей имеют одинаковые значения полей, следует удалить их все.
+//Удалять запись можно как по номеру, так и по любому полю. Если несколько записей имеют одинаковые
+//значения полей, следует удалить их все.
 
 
 
