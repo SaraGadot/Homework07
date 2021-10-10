@@ -78,10 +78,11 @@ namespace Homework07
         }
         static void DisplayPersons(List<Person> persons)
         {
-            Console.WriteLine($"{"Имя",10} {"Фамилия",20} {"Возраст",7} {"Пол",8} {"Время создания",20}");
-            foreach (var person in persons)
+            Console.WriteLine($"{"№",2} {"Имя",10} {"Фамилия",20} {"Возраст",7} {"Пол",8} {"Время создания",20}");
+            for (var i = 0; i < persons.Count; i++)
             {
-                Console.WriteLine($"{person.firstName,10} {person.lastName,20} {person.age,7} {person.sex,8} {person.createdDate,20}");
+                var person = persons[i];
+                Console.WriteLine($"{i+1,2} {person.firstName,10} {person.lastName,20} {person.age,7} {person.sex,8} {person.createdDate,20}");
             }
 
         }
