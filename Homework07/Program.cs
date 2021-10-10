@@ -45,11 +45,19 @@ namespace Homework07
         {
             Console.WriteLine("Выберите действие: ");
             Console.WriteLine("1. Добавить запись");
+            Console.WriteLine("2. Редактировать запись");
             Console.WriteLine("0. Выйти");
             var action = Console.ReadLine();
             if (action == "1")
             {
                 AddPerson(persons);
+            }
+            else if (action == "2")
+            {
+                Console.WriteLine("Введите номер записи для редактирования:");
+                var i = Convert.ToInt32(Console.ReadLine()) - 1;
+                persons[i] = EditPerson(persons[i]);
+
             }
             else if (action == "0")
             {
@@ -63,6 +71,30 @@ namespace Homework07
             var person3 = InputPerson();
             persons.Add(person3);
 
+        }
+        static Person EditPerson(Person person)
+        {
+            Console.WriteLine(person.firstName);
+            Console.WriteLine("Введите новое имя или Enter для старого");
+            var newFirstName = Console.ReadLine();
+            var firstName = newFirstName == "" ? person.firstName : newFirstName;
+
+            Console.WriteLine(person.lastName);
+            Console.WriteLine("Введите новую фамилию или Enter для старой");
+            var newLastName = Console.ReadLine();
+            var lastName = newLastName == "" ? person.lastName : newLastName;
+
+            Console.WriteLine(person.age);
+            Console.WriteLine("Введите новый возраст или Enter для старого");
+            var newAge = Console.ReadLine();
+            var age = newAge == "" ? person.age : Convert.ToInt32(newAge);
+
+            Console.WriteLine(person.sex);
+            Console.WriteLine("Введите новый пол (м/ж) или Enter для старого");
+            var newSex = Console.ReadLine();
+            var sex = newSex == "" ? person.sex :  newSex == "м" ? Sex.Male : Sex.Female;
+
+            return new Person(firstName, lastName, age, sex);
         }
         static Person InputPerson()
         {
