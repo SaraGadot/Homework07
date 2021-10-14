@@ -46,6 +46,7 @@ namespace Homework07
             Console.WriteLine("Выберите действие: ");
             Console.WriteLine("1. Добавить запись");
             Console.WriteLine("2. Редактировать запись");
+            Console.WriteLine("3. Удалить запись");
             Console.WriteLine("0. Выйти");
             var action = Console.ReadLine();
             if (action == "1")
@@ -59,6 +60,12 @@ namespace Homework07
                 persons[i] = EditPerson(persons[i]);
 
             }
+            else if (action == "3")
+            {
+                Console.WriteLine("Введите номер записи для удаления:");
+                var i = Convert.ToInt32(Console.ReadLine()) - 1;
+                persons.RemoveAt(i);
+            }    
             else if (action == "0")
             {
                 return false;
