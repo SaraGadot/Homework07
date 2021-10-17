@@ -47,6 +47,7 @@ namespace Homework07
             Console.WriteLine("1. Добавить запись");
             Console.WriteLine("2. Редактировать запись");
             Console.WriteLine("3. Удалить запись");
+            Console.WriteLine("4. Упорядочить записи");
             Console.WriteLine("0. Выйти");
             var action = Console.ReadLine();
             if (action == "1")
@@ -65,7 +66,12 @@ namespace Homework07
                 Console.WriteLine("Введите номер записи для удаления:");
                 var i = Convert.ToInt32(Console.ReadLine()) - 1;
                 persons.RemoveAt(i);
-            }    
+            }   
+            else if (action == "4")
+            {
+                //persons.Sort((person1, person2) => person1.createdDate.CompareTo(person2.createdDate));
+                persons.Sort((person1, person2) => person1.lastName.CompareTo(person2.lastName));
+            }
             else if (action == "0")
             {
                 return false;
