@@ -94,6 +94,22 @@ namespace Homework07
                     case "5":
                         persons.Sort((person1, person2) => person1.createdDate.CompareTo(person2.createdDate));
                         break;
+                    case "6":
+                        persons.Sort((person1, person2) => 
+                        {
+                            var cmp = person1.sex.CompareTo(person2.sex);
+                            if (cmp == 0)
+                            {
+                                cmp = string.Compare(person1.lastName, person2.lastName);
+                            }                            
+                            if (cmp == 0)
+                            {
+                                cmp = string.Compare(person1.firstName, person2.firstName);
+                            }
+                            return cmp;
+                        }
+                        );
+                        break;
                 }
             }
             else if (action == "0")
