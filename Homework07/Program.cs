@@ -69,8 +69,32 @@ namespace Homework07
             }   
             else if (action == "4")
             {
-                //persons.Sort((person1, person2) => person1.createdDate.CompareTo(person2.createdDate));
-                persons.Sort((person1, person2) => person1.lastName.CompareTo(person2.lastName));
+                Console.WriteLine("По какому полю упорядочить?");
+                Console.WriteLine("1 - имя");
+                Console.WriteLine("2 - фамилия");
+                Console.WriteLine("3 - возраст");
+                Console.WriteLine("4 - пол");
+                Console.WriteLine("5 - дата создания");
+
+                var sortField = Console.ReadLine();
+                switch(sortField)
+                {
+                    case "1":
+                        persons.Sort((person1, person2) => string.Compare(person1.firstName, person2.firstName));
+                        break;
+                    case "2":
+                        persons.Sort((person1, person2) => string.Compare(person1.lastName, person2.lastName));
+                        break;
+                    case "3":
+                        persons.Sort((person1, person2) => person1.age.CompareTo(person2.age));
+                        break;
+                    case "4":
+                        persons.Sort((person1, person2) => person1.sex.CompareTo(person2.sex));
+                        break;
+                    case "5":
+                        persons.Sort((person1, person2) => person1.createdDate.CompareTo(person2.createdDate));
+                        break;
+                }
             }
             else if (action == "0")
             {
