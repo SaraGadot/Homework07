@@ -63,9 +63,43 @@ namespace Homework07
             }
             else if (action == "3")
             {
-                Console.WriteLine("Введите номер записи для удаления:");
-                var i = Convert.ToInt32(Console.ReadLine()) - 1;
-                persons.RemoveAt(i);
+                Console.WriteLine("По какому полю удалить?");
+                Console.WriteLine("0 - номер записи");
+                Console.WriteLine("1 - имя");
+                Console.WriteLine("2 - фамилия");
+                Console.WriteLine("3 - возраст");
+                Console.WriteLine("4 - пол");
+                var fieldId = Console.ReadLine();
+                switch(fieldId)
+                {
+                    case "0":
+                        Console.WriteLine("Введите номер записи для удаления:");
+                        var i = Convert.ToInt32(Console.ReadLine()) - 1;
+                        persons.RemoveAt(i);
+                        break;
+                    case "1":
+                        Console.WriteLine("Введите имя для удаления:");
+                        var firstName = Console.ReadLine();
+                        persons.RemoveAll(person => person.firstName == firstName);
+                        break;
+                    case "2":
+                        Console.WriteLine("Введите фамилию для удаления:");
+                        var lastName = Console.ReadLine();
+                        persons.RemoveAll(person => person.lastName == lastName);
+                        break;
+                    case "3":
+                        Console.WriteLine("Введите возраст для удаления:");
+                        var age = Convert.ToInt32(Console.ReadLine());
+                        persons.RemoveAll(person => person.age == age);
+                        break;
+                    case "4":
+                        Console.WriteLine("Введите пол для удаления (м/ж):");
+                        var sex = Console.ReadLine() == "м" ? Sex.Male : Sex.Female;
+                        persons.RemoveAll(person => person.sex == sex);
+                        break;
+
+                }
+                
             }   
             else if (action == "4")
             {
