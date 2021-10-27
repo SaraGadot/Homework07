@@ -9,20 +9,6 @@ namespace Homework07
     {
         static void Main(string[] args)
         {
-            //var person = new Person();
-            //person.firstName = "Иван";
-            //person.lastName = "Иванов";
-            //person.age = 30;
-            //person.sex = Sex.Male;
-            //person.createdDate = DateTime.Now;
-
-            //var person2 = new Person();
-            //person2.firstName = "Мария";
-            //person2.lastName = "Петрова";
-            //person2.age = 25;
-            //person2.sex = Sex.Female;
-            //person2.createdDate = DateTime.Now;
-
             var persons = LoadPersons();
 
             DisplayPersons(persons);
@@ -48,6 +34,7 @@ namespace Homework07
             Console.WriteLine("2. Редактировать запись");
             Console.WriteLine("3. Удалить запись");
             Console.WriteLine("4. Упорядочить записи");
+            Console.WriteLine("5. Сгенерировать записи");
             Console.WriteLine("0. Выйти");
             var action = Console.ReadLine();
             if (action == "1")
@@ -70,7 +57,7 @@ namespace Homework07
                 Console.WriteLine("3 - возраст");
                 Console.WriteLine("4 - пол");
                 var fieldId = Console.ReadLine();
-                switch(fieldId)
+                switch (fieldId)
                 {
                     case "0":
                         Console.WriteLine("Введите номер записи для удаления:");
@@ -99,8 +86,8 @@ namespace Homework07
                         break;
 
                 }
-                
-            }   
+
+            }
             else if (action == "4")
             {
                 Console.WriteLine("По какому полю упорядочить?");
@@ -111,7 +98,7 @@ namespace Homework07
                 Console.WriteLine("5 - дата создания");
 
                 var sortField = Console.ReadLine();
-                switch(sortField)
+                switch (sortField)
                 {
                     case "1":
                         persons.Sort((person1, person2) => string.Compare(person1.firstName, person2.firstName));
@@ -129,13 +116,13 @@ namespace Homework07
                         persons.Sort((person1, person2) => person1.createdDate.CompareTo(person2.createdDate));
                         break;
                     case "6":
-                        persons.Sort((person1, person2) => 
+                        persons.Sort((person1, person2) =>
                         {
                             var cmp = person1.sex.CompareTo(person2.sex);
                             if (cmp == 0)
                             {
                                 cmp = string.Compare(person1.lastName, person2.lastName);
-                            }                            
+                            }
                             if (cmp == 0)
                             {
                                 cmp = string.Compare(person1.firstName, person2.firstName);
@@ -144,6 +131,83 @@ namespace Homework07
                         }
                         );
                         break;
+                }
+            }
+            else if (action == "5")
+            {
+                Console.WriteLine("Введите количество записей для генерации:");
+                var count = Convert.ToInt32(Console.ReadLine());
+                var maleFirstNames = new[]
+                {
+                    "Александр",
+                    "Борис",
+                    "Виктор",
+                    "Геннадий",
+                    "Дмитрий",
+                    "Евгений",
+                    "Захар",
+                    "Игорь",
+                    "Константин",
+                    "Леонид",
+                    "Марк",
+                    "Никита",
+
+                };
+                var maleLastNames = new[]
+                {
+                    "Иванов",
+                    "Петров",
+                    "Сидоров",
+                    "Петухов",
+                    "Воронов",
+                    "Сорокин",
+                    "Воробьев",
+                    "Курицин",
+                    "Собакин",
+                    "Орлов",
+                    "Соколов",
+                    "Ласточкин",
+
+                };
+                var famaleFirstNames = new[]
+               {
+                    "Анна",
+                    "Варвара",
+                    "Галина",
+                    "Дарья",
+                    "Елена",
+                    "Зинаида",
+                    "Екатерина",
+                    "Лариса",
+                    "Мария",
+                    "Наталья",
+                    "Ольга",
+                    "Полина",
+                };
+                var famaleLastNames = new[]
+                {
+                    "Борисова",
+                    "Краснова",
+                    "Никитина",
+                    "Павлова",
+                    "Шарикова",
+                    "Круглова",
+                    "Караваева",
+                    "Куприянова",
+                    "Пастухова",
+                    "Чашкина",
+                };
+                var random = new Random();
+                for (var i = 0; i < count; i++)
+                {
+                    var sex = random.Next(2) == 0 ? Sex.Male : Sex.Female;
+                    var firstNames = sex == Sex.Male ? maleFirstNames : famaleFirstNames;
+                    var lastNames = sex == Sex.Male ? maleLastNames : famaleLastNames;
+                    var firstName = firstNames[random.Next(firstNames.Length)];
+                    var lastName = lastNames[random.Next(lastNames.Length)];
+                    var age = random.Next(100);
+                    var person = new Person(firstName, lastName, age, sex);
+                    persons.Add(person);
                 }
             }
             else if (action == "0")
