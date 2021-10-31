@@ -50,95 +50,30 @@ namespace Homework07
             }
             else if (action == "3")
             {
-                Console.WriteLine("По какому полю удалить?");
-                Console.WriteLine("0 - номер записи");
-                Console.WriteLine("1 - имя");
-                Console.WriteLine("2 - фамилия");
-                Console.WriteLine("3 - возраст");
-                Console.WriteLine("4 - пол");
-                var fieldId = Console.ReadLine();
-                switch (fieldId)
-                {
-                    case "0":
-                        Console.WriteLine("Введите номер записи для удаления:");
-                        var i = Convert.ToInt32(Console.ReadLine()) - 1;
-                        persons.RemoveAt(i);
-                        break;
-                    case "1":
-                        Console.WriteLine("Введите имя для удаления:");
-                        var firstName = Console.ReadLine();
-                        persons.RemoveAll(person => person.firstName == firstName);
-                        break;
-                    case "2":
-                        Console.WriteLine("Введите фамилию для удаления:");
-                        var lastName = Console.ReadLine();
-                        persons.RemoveAll(person => person.lastName == lastName);
-                        break;
-                    case "3":
-                        Console.WriteLine("Введите возраст для удаления:");
-                        var age = Convert.ToInt32(Console.ReadLine());
-                        persons.RemoveAll(person => person.age == age);
-                        break;
-                    case "4":
-                        Console.WriteLine("Введите пол для удаления (м/ж):");
-                        var sex = Console.ReadLine() == "м" ? Sex.Male : Sex.Female;
-                        persons.RemoveAll(person => person.sex == sex);
-                        break;
-
-                }
-
+                DeletePersons(persons);
             }
             else if (action == "4")
             {
-                Console.WriteLine("По какому полю упорядочить?");
-                Console.WriteLine("1 - имя");
-                Console.WriteLine("2 - фамилия");
-                Console.WriteLine("3 - возраст");
-                Console.WriteLine("4 - пол");
-                Console.WriteLine("5 - дата создания");
-
-                var sortField = Console.ReadLine();
-                switch (sortField)
-                {
-                    case "1":
-                        persons.Sort((person1, person2) => string.Compare(person1.firstName, person2.firstName));
-                        break;
-                    case "2":
-                        persons.Sort((person1, person2) => string.Compare(person1.lastName, person2.lastName));
-                        break;
-                    case "3":
-                        persons.Sort((person1, person2) => person1.age.CompareTo(person2.age));
-                        break;
-                    case "4":
-                        persons.Sort((person1, person2) => person1.sex.CompareTo(person2.sex));
-                        break;
-                    case "5":
-                        persons.Sort((person1, person2) => person1.createdDate.CompareTo(person2.createdDate));
-                        break;
-                    case "6":
-                        persons.Sort((person1, person2) =>
-                        {
-                            var cmp = person1.sex.CompareTo(person2.sex);
-                            if (cmp == 0)
-                            {
-                                cmp = string.Compare(person1.lastName, person2.lastName);
-                            }
-                            if (cmp == 0)
-                            {
-                                cmp = string.Compare(person1.firstName, person2.firstName);
-                            }
-                            return cmp;
-                        }
-                        );
-                        break;
-                }
+                SortPersons(persons);
             }
             else if (action == "5")
             {
-                Console.WriteLine("Введите количество записей для генерации:");
-                var count = Convert.ToInt32(Console.ReadLine());
-                var maleFirstNames = new[]
-                {
+                GeneratePersons(persons);
+            }
+            else if (action == "0")
+            {
+                return false;
+            }
+            return true;
+           
+        }
+
+        private static void GeneratePersons(List<Person> persons)
+        {
+            Console.WriteLine("Введите количество записей для генерации:");
+            var count = Convert.ToInt32(Console.ReadLine());
+            var maleFirstNames = new[]
+            {
                     "Александр",
                     "Борис",
                     "Виктор",
@@ -153,8 +88,8 @@ namespace Homework07
                     "Никита",
 
                 };
-                var maleLastNames = new[]
-                {
+            var maleLastNames = new[]
+            {
                     "Иванов",
                     "Петров",
                     "Сидоров",
@@ -169,8 +104,8 @@ namespace Homework07
                     "Ласточкин",
 
                 };
-                var famaleFirstNames = new[]
-               {
+            var famaleFirstNames = new[]
+           {
                     "Анна",
                     "Варвара",
                     "Галина",
@@ -184,8 +119,8 @@ namespace Homework07
                     "Ольга",
                     "Полина",
                 };
-                var famaleLastNames = new[]
-                {
+            var famaleLastNames = new[]
+            {
                     "Борисова",
                     "Краснова",
                     "Никитина",
@@ -197,27 +132,106 @@ namespace Homework07
                     "Пастухова",
                     "Чашкина",
                 };
-                var random = new Random();
-                for (var i = 0; i < count; i++)
-                {
-                    var sex = random.Next(2) == 0 ? Sex.Male : Sex.Female;
-                    var firstNames = sex == Sex.Male ? maleFirstNames : famaleFirstNames;
-                    var lastNames = sex == Sex.Male ? maleLastNames : famaleLastNames;
-                    var firstName = firstNames[random.Next(firstNames.Length)];
-                    var lastName = lastNames[random.Next(lastNames.Length)];
-                    var age = random.Next(100);
-                    var person = new Person(firstName, lastName, age, sex);
-                    persons.Add(person);
-                }
-            }
-            else if (action == "0")
+            var random = new Random();
+            for (var i = 0; i < count; i++)
             {
-                return false;
+                var sex = random.Next(2) == 0 ? Sex.Male : Sex.Female;
+                var firstNames = sex == Sex.Male ? maleFirstNames : famaleFirstNames;
+                var lastNames = sex == Sex.Male ? maleLastNames : famaleLastNames;
+                var firstName = firstNames[random.Next(firstNames.Length)];
+                var lastName = lastNames[random.Next(lastNames.Length)];
+                var age = random.Next(100);
+                var person = new Person(firstName, lastName, age, sex);
+                persons.Add(person);
             }
-            return true;
-           
         }
-        static void AddPerson (List<Person> persons)
+
+        private static void SortPersons(List<Person> persons)
+        {
+            Console.WriteLine("По какому полю упорядочить?");
+            Console.WriteLine("1 - имя");
+            Console.WriteLine("2 - фамилия");
+            Console.WriteLine("3 - возраст");
+            Console.WriteLine("4 - пол");
+            Console.WriteLine("5 - дата создания");
+
+            var sortField = Console.ReadLine();
+            switch (sortField)
+            {
+                case "1":
+                    persons.Sort((person1, person2) => string.Compare(person1.firstName, person2.firstName));
+                    break;
+                case "2":
+                    persons.Sort((person1, person2) => string.Compare(person1.lastName, person2.lastName));
+                    break;
+                case "3":
+                    persons.Sort((person1, person2) => person1.age.CompareTo(person2.age));
+                    break;
+                case "4":
+                    persons.Sort((person1, person2) => person1.sex.CompareTo(person2.sex));
+                    break;
+                case "5":
+                    persons.Sort((person1, person2) => person1.createdDate.CompareTo(person2.createdDate));
+                    break;
+                case "6":
+                    persons.Sort((person1, person2) =>
+                    {
+                        var cmp = person1.sex.CompareTo(person2.sex);
+                        if (cmp == 0)
+                        {
+                            cmp = string.Compare(person1.lastName, person2.lastName);
+                        }
+                        if (cmp == 0)
+                        {
+                            cmp = string.Compare(person1.firstName, person2.firstName);
+                        }
+                        return cmp;
+                    }
+                    );
+                    break;
+            }
+        }
+
+        static void DeletePersons(List<Person> persons)
+        {
+            Console.WriteLine("По какому полю удалить?");
+            Console.WriteLine("0 - номер записи");
+            Console.WriteLine("1 - имя");
+            Console.WriteLine("2 - фамилия");
+            Console.WriteLine("3 - возраст");
+            Console.WriteLine("4 - пол");
+            var fieldId = Console.ReadLine();
+            switch (fieldId)
+            {
+                case "0":
+                    Console.WriteLine("Введите номер записи для удаления:");
+                    var i = Convert.ToInt32(Console.ReadLine()) - 1;
+                    persons.RemoveAt(i);
+                    break;
+                case "1":
+                    Console.WriteLine("Введите имя для удаления:");
+                    var firstName = Console.ReadLine();
+                    persons.RemoveAll(person => person.firstName == firstName);
+                    break;
+                case "2":
+                    Console.WriteLine("Введите фамилию для удаления:");
+                    var lastName = Console.ReadLine();
+                    persons.RemoveAll(person => person.lastName == lastName);
+                    break;
+                case "3":
+                    Console.WriteLine("Введите возраст для удаления:");
+                    var age = Convert.ToInt32(Console.ReadLine());
+                    persons.RemoveAll(person => person.age == age);
+                    break;
+                case "4":
+                    Console.WriteLine("Введите пол для удаления (м/ж):");
+                    var sex = Console.ReadLine() == "м" ? Sex.Male : Sex.Female;
+                    persons.RemoveAll(person => person.sex == sex);
+                    break;
+
+            }
+        }
+        static void AddPerson(List<Person> persons)
         {
             var person3 = InputPerson();
             persons.Add(person3);
