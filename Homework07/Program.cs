@@ -13,7 +13,7 @@ namespace Homework07
 
             DisplayPersons(persons);
 
-            for ( ; ; )
+            for (; ; )
             {
                 if (Menu(persons) == false)
                 {
@@ -22,10 +22,10 @@ namespace Homework07
 
                 DisplayPersons(persons);
             }
-                
+
 
             SavePersons(persons);
-            
+
         }
         static bool Menu(List<Person> persons)
         {
@@ -35,6 +35,7 @@ namespace Homework07
             Console.WriteLine("3. Удалить запись");
             Console.WriteLine("4. Упорядочить записи");
             Console.WriteLine("5. Сгенерировать записи");
+            Console.WriteLine("6. Загрузить записи по диапазону дат");
             Console.WriteLine("0. Выйти");
             var action = Console.ReadLine();
             if (action == "1")
@@ -60,12 +61,17 @@ namespace Homework07
             {
                 GeneratePersons(persons);
             }
+            else if (action == "6")
+            {
+                persons.Clear();
+                persons.AddRange(LoadPersonsByDates());
+            }
             else if (action == "0")
             {
                 return false;
             }
             return true;
-           
+
         }
 
         private static void GeneratePersons(List<Person> persons)
@@ -257,7 +263,7 @@ namespace Homework07
             Console.WriteLine(person.sex);
             Console.WriteLine("Введите новый пол (м/ж) или Enter для старого");
             var newSex = Console.ReadLine();
-            var sex = newSex == "" ? person.sex :  newSex == "м" ? Sex.Male : Sex.Female;
+            var sex = newSex == "" ? person.sex : newSex == "м" ? Sex.Male : Sex.Female;
 
             return new Person(firstName, lastName, age, sex);
         }
@@ -279,7 +285,7 @@ namespace Homework07
             for (var i = 0; i < persons.Count; i++)
             {
                 var person = persons[i];
-                Console.WriteLine($"{i+1,2} {person.firstName,10} {person.lastName,20} {person.age,7} {person.sex,8} {person.createdDate,20}");
+                Console.WriteLine($"{i + 1,2} {person.firstName,10} {person.lastName,20} {person.age,7} {person.sex,8} {person.createdDate,20}");
             }
 
         }
@@ -295,6 +301,20 @@ namespace Homework07
 
             var json = File.ReadAllText("persons.json");
             return JsonConvert.DeserializeObject<List<Person>>(json);
+        }
+        static List<Person> LoadPersonsByDates()
+        {
+            if (!File.Exists("persons.json"))
+                return new List<Person>();
+
+            var json = File.ReadAllText("persons.json");
+            var persons = JsonConvert.DeserializeObject<List<Person>>(json);
+            Console.WriteLine("Введите дату начала:");
+            var startDate = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Введите дату конца:");
+            var finishDate = DateTime.Parse(Console.ReadLine());
+            persons.RemoveAll(person => finishDate < person.createdDate || person.createdDate < startDate);
+            return persons;
         }
     }
     class Person
