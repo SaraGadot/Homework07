@@ -45,7 +45,7 @@ namespace Homework07
             else if (action == "2")
             {
                 Console.WriteLine("Введите номер записи для редактирования:");
-                var i = Convert.ToInt32(Console.ReadLine()) - 1;
+                var i = ReadInt() - 1;
                 persons[i] = EditPerson(persons[i]);
 
             }
@@ -102,7 +102,7 @@ namespace Homework07
             {
                 case "0":
                     Console.WriteLine("Введите номер записи для удаления:");
-                    var i = Convert.ToInt32(Console.ReadLine()) - 1;
+                    var i = ReadInt() - 1;
                     DeleteByIndex(persons, i);
                     break;
                 case "1":
@@ -117,7 +117,7 @@ namespace Homework07
                     break;
                 case "3":
                     Console.WriteLine("Введите возраст для удаления:");
-                    var age = Convert.ToInt32(Console.ReadLine());
+                    var age = ReadInt();
                     DeleteByAge(persons, age);
                     break;
                 case "4":
@@ -153,7 +153,7 @@ namespace Homework07
             Console.WriteLine(person.age);
             Console.WriteLine("Введите новый возраст или Enter для старого");
             var newAge = Console.ReadLine();
-            var age = newAge == "" ? person.age : Convert.ToInt32(newAge);
+            var age = newAge == "" ? person.age : ReadInt(newAge);
 
             Console.WriteLine(person.sex);
             Console.WriteLine("Введите новый пол (м/ж) или Enter для старого");
@@ -169,7 +169,7 @@ namespace Homework07
             Console.WriteLine("Введите фамилию:");
             var lastName = Console.ReadLine();
             Console.WriteLine("Введите возраст:");
-            var age = Convert.ToInt32(Console.ReadLine());
+            var age = ReadInt();
             Console.WriteLine("Введите пол (м/ж)");
             var sex = Console.ReadLine() == "м" ? Sex.Male : Sex.Female;
             return new Person(firstName, lastName, age, sex);
@@ -184,6 +184,24 @@ namespace Homework07
             }
 
         }
+
+        static int ReadInt(string numberText = null)
+        {
+            for (; ; )
+            {
+                numberText ??= Console.ReadLine();
+                if (int.TryParse(numberText, out var number))
+                {
+                    return number;
+                }
+                else
+                {
+                    Console.WriteLine("Некорректный ввод, введите число");
+                    numberText = null;
+                }
+            }
+        }
+
     }
 }
 //Что нужно сделать

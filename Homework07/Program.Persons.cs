@@ -13,7 +13,7 @@ namespace Homework07
         private static void GeneratePersons(List<Person> persons)
         {
             Console.WriteLine("Введите количество записей для генерации:");
-            var count = Convert.ToInt32(Console.ReadLine());
+            var count = ReadInt();
             var maleFirstNames = new[]
             {
                     "Александр",
