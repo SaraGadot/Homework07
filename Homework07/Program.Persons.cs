@@ -10,10 +10,9 @@ namespace Homework07
 {
     partial class Program
     {
-        private static void GeneratePersons(List<Person> persons)
+
+        private static void GeneratePersons(List<Person> persons, int count)
         {
-            Console.WriteLine("Введите количество записей для генерации:");
-            var count = ReadInt();
             var maleFirstNames = new[]
             {
                     "Александр",
@@ -170,21 +169,16 @@ namespace Homework07
             var json = File.ReadAllText("persons.json");
             return JsonConvert.DeserializeObject<List<Person>>(json);
         }
-        static List<Person> LoadPersonsByDates()
+
+        private static List<Person> LoadPersonsByDates(DateTime startDate, DateTime finishDate)
         {
             if (!File.Exists("persons.json"))
                 return new List<Person>();
 
             var json = File.ReadAllText("persons.json");
             var persons = JsonConvert.DeserializeObject<List<Person>>(json);
-            Console.WriteLine("Введите дату начала:");
-            var startDate = DateTime.Parse(Console.ReadLine());
-            Console.WriteLine("Введите дату конца:");
-            var finishDate = DateTime.Parse(Console.ReadLine());
             persons.RemoveAll(person => finishDate < person.createdDate || person.createdDate < startDate);
             return persons;
         }
-
-
     }
 }

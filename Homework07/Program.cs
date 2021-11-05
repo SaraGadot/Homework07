@@ -59,12 +59,12 @@ namespace Homework07
             }
             else if (action == "5")
             {
-                GeneratePersons(persons);
+                ProcessGeneratePersons(persons);
             }
             else if (action == "6")
             {
                 persons.Clear();
-                persons.AddRange(LoadPersonsByDates());
+                persons.AddRange(ProcessLoadPersonsByDates());
             }
             else if (action == "0")
             {
@@ -201,6 +201,24 @@ namespace Homework07
                 }
             }
         }
+        static List<Person> ProcessLoadPersonsByDates()
+        {
+            Console.WriteLine("Введите дату начала:");
+            var startDate = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Введите дату конца:");
+            var finishDate = DateTime.Parse(Console.ReadLine());
+
+            return LoadPersonsByDates(startDate, finishDate);
+        }
+
+        private static void ProcessGeneratePersons(List<Person> persons)
+        {
+            Console.WriteLine("Введите количество записей для генерации:");
+            var count = ReadInt();
+            GeneratePersons(persons, count);
+        }
+
+
 
     }
 }
