@@ -317,31 +317,6 @@ namespace Homework07
             return persons;
         }
     }
-    class Person
-    {
-        public string firstName;
-        public string lastName;
-        public int age;
-        public Sex sex;
-        public DateTime createdDate = DateTime.Now;
-        public Person(string firstName, string lastName, int age, Sex sex)
-        {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.age = age;
-            this.sex = sex;
-        }
-        public Person()
-        {
-
-        }
-    }
-    enum Sex
-    {
-        Male,
-        Female
-    }
-
 }
 //Что нужно сделать
 //Разработайте ежедневник, который может хранить множество записей. Каждая запись состоит из нескольких полей, количество которых
