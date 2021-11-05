@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Homework07
 {
-    class Program
+    partial class Program
     {
         static void Main(string[] args)
         {
@@ -40,7 +40,7 @@ namespace Homework07
             var action = Console.ReadLine();
             if (action == "1")
             {
-                AddPerson(persons);
+                ProcessAddPerson(persons);
             }
             else if (action == "2")
             {
@@ -51,11 +51,11 @@ namespace Homework07
             }
             else if (action == "3")
             {
-                DeletePersons(persons);
+                ProcessDeletePersons(persons);
             }
             else if (action == "4")
             {
-                SortPersons(persons);
+                ProcessSortPersons(persons);
             }
             else if (action == "5")
             {
@@ -74,85 +74,7 @@ namespace Homework07
 
         }
 
-        private static void GeneratePersons(List<Person> persons)
-        {
-            Console.WriteLine("Введите количество записей для генерации:");
-            var count = Convert.ToInt32(Console.ReadLine());
-            var maleFirstNames = new[]
-            {
-                    "Александр",
-                    "Борис",
-                    "Виктор",
-                    "Геннадий",
-                    "Дмитрий",
-                    "Евгений",
-                    "Захар",
-                    "Игорь",
-                    "Константин",
-                    "Леонид",
-                    "Марк",
-                    "Никита",
-
-                };
-            var maleLastNames = new[]
-            {
-                    "Иванов",
-                    "Петров",
-                    "Сидоров",
-                    "Петухов",
-                    "Воронов",
-                    "Сорокин",
-                    "Воробьев",
-                    "Курицин",
-                    "Собакин",
-                    "Орлов",
-                    "Соколов",
-                    "Ласточкин",
-
-                };
-            var famaleFirstNames = new[]
-           {
-                    "Анна",
-                    "Варвара",
-                    "Галина",
-                    "Дарья",
-                    "Елена",
-                    "Зинаида",
-                    "Екатерина",
-                    "Лариса",
-                    "Мария",
-                    "Наталья",
-                    "Ольга",
-                    "Полина",
-                };
-            var famaleLastNames = new[]
-            {
-                    "Борисова",
-                    "Краснова",
-                    "Никитина",
-                    "Павлова",
-                    "Шарикова",
-                    "Круглова",
-                    "Караваева",
-                    "Куприянова",
-                    "Пастухова",
-                    "Чашкина",
-                };
-            var random = new Random();
-            for (var i = 0; i < count; i++)
-            {
-                var sex = random.Next(2) == 0 ? Sex.Male : Sex.Female;
-                var firstNames = sex == Sex.Male ? maleFirstNames : famaleFirstNames;
-                var lastNames = sex == Sex.Male ? maleLastNames : famaleLastNames;
-                var firstName = firstNames[random.Next(firstNames.Length)];
-                var lastName = lastNames[random.Next(lastNames.Length)];
-                var age = random.Next(100);
-                var person = new Person(firstName, lastName, age, sex);
-                persons.Add(person);
-            }
-        }
-
-        private static void SortPersons(List<Person> persons)
+        static void ProcessSortPersons(List<Person> persons)
         {
             Console.WriteLine("По какому полю упорядочить?");
             Console.WriteLine("1 - имя");
@@ -162,43 +84,12 @@ namespace Homework07
             Console.WriteLine("5 - дата создания");
 
             var sortField = Console.ReadLine();
-            switch (sortField)
-            {
-                case "1":
-                    persons.Sort((person1, person2) => string.Compare(person1.firstName, person2.firstName));
-                    break;
-                case "2":
-                    persons.Sort((person1, person2) => string.Compare(person1.lastName, person2.lastName));
-                    break;
-                case "3":
-                    persons.Sort((person1, person2) => person1.age.CompareTo(person2.age));
-                    break;
-                case "4":
-                    persons.Sort((person1, person2) => person1.sex.CompareTo(person2.sex));
-                    break;
-                case "5":
-                    persons.Sort((person1, person2) => person1.createdDate.CompareTo(person2.createdDate));
-                    break;
-                case "6":
-                    persons.Sort((person1, person2) =>
-                    {
-                        var cmp = person1.sex.CompareTo(person2.sex);
-                        if (cmp == 0)
-                        {
-                            cmp = string.Compare(person1.lastName, person2.lastName);
-                        }
-                        if (cmp == 0)
-                        {
-                            cmp = string.Compare(person1.firstName, person2.firstName);
-                        }
-                        return cmp;
-                    }
-                    );
-                    break;
-            }
+ 
+
+            SortPersons(persons, sortField);
         }
 
-        static void DeletePersons(List<Person> persons)
+        static void ProcessDeletePersons(List<Person> persons)
         {
             Console.WriteLine("По какому полю удалить?");
             Console.WriteLine("0 - номер записи");
@@ -212,37 +103,41 @@ namespace Homework07
                 case "0":
                     Console.WriteLine("Введите номер записи для удаления:");
                     var i = Convert.ToInt32(Console.ReadLine()) - 1;
-                    persons.RemoveAt(i);
+                    DeleteByIndex(persons, i);
                     break;
                 case "1":
                     Console.WriteLine("Введите имя для удаления:");
                     var firstName = Console.ReadLine();
-                    persons.RemoveAll(person => person.firstName == firstName);
+                    DeleteByFirstName(persons, firstName);
                     break;
                 case "2":
                     Console.WriteLine("Введите фамилию для удаления:");
                     var lastName = Console.ReadLine();
-                    persons.RemoveAll(person => person.lastName == lastName);
+                    DeleteByLastName(persons, lastName);
                     break;
                 case "3":
                     Console.WriteLine("Введите возраст для удаления:");
                     var age = Convert.ToInt32(Console.ReadLine());
-                    persons.RemoveAll(person => person.age == age);
+                    DeleteByAge(persons, age);
                     break;
                 case "4":
                     Console.WriteLine("Введите пол для удаления (м/ж):");
                     var sex = Console.ReadLine() == "м" ? Sex.Male : Sex.Female;
-                    persons.RemoveAll(person => person.sex == sex);
+                    DeleteBySex(persons, sex);
                     break;
 
             }
         }
-        static void AddPerson(List<Person> persons)
+
+
+        static void ProcessAddPerson(List<Person> persons)
         {
-            var person3 = InputPerson();
-            persons.Add(person3);
+            var person = InputPerson();
+            AddPerson(persons, person);
 
         }
+
+
         static Person EditPerson(Person person)
         {
             Console.WriteLine(person.firstName);
@@ -288,33 +183,6 @@ namespace Homework07
                 Console.WriteLine($"{i + 1,2} {person.firstName,10} {person.lastName,20} {person.age,7} {person.sex,8} {person.createdDate,20}");
             }
 
-        }
-        static void SavePersons(List<Person> persons)
-        {
-            var json = JsonConvert.SerializeObject(persons, Formatting.Indented);
-            File.WriteAllText("persons.json", json);
-        }
-        static List<Person> LoadPersons()
-        {
-            if (!File.Exists("persons.json"))
-                return new List<Person>();
-
-            var json = File.ReadAllText("persons.json");
-            return JsonConvert.DeserializeObject<List<Person>>(json);
-        }
-        static List<Person> LoadPersonsByDates()
-        {
-            if (!File.Exists("persons.json"))
-                return new List<Person>();
-
-            var json = File.ReadAllText("persons.json");
-            var persons = JsonConvert.DeserializeObject<List<Person>>(json);
-            Console.WriteLine("Введите дату начала:");
-            var startDate = DateTime.Parse(Console.ReadLine());
-            Console.WriteLine("Введите дату конца:");
-            var finishDate = DateTime.Parse(Console.ReadLine());
-            persons.RemoveAll(person => finishDate < person.createdDate || person.createdDate < startDate);
-            return persons;
         }
     }
 }
